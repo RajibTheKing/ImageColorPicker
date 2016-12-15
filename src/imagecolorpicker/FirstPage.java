@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
 
 /**
  *
@@ -36,15 +37,17 @@ public class FirstPage extends javax.swing.JFrame {
 
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        filePathLabel = new javax.swing.JLabel();
+        selectedFiles = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         logOutputArea = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        areaForFileNames = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Select File");
+        jButton1.setText("Select Files");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -58,7 +61,7 @@ public class FirstPage extends javax.swing.JFrame {
             }
         });
 
-        filePathLabel.setText("Selected File Path: ");
+        selectedFiles.setText("Selected Files");
 
         logOutputArea.setColumns(20);
         logOutputArea.setRows(5);
@@ -73,6 +76,10 @@ public class FirstPage extends javax.swing.JFrame {
             }
         });
 
+        areaForFileNames.setColumns(20);
+        areaForFileNames.setRows(5);
+        jScrollPane2.setViewportView(areaForFileNames);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -80,23 +87,21 @@ public class FirstPage extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(68, 68, 68)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jButton2)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(filePathLabel)
-                                    .addGap(16, 16, 16)))))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(41, 41, 41)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 655, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton2)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 655, Short.MAX_VALUE)
+                            .addComponent(jButton1)
+                            .addComponent(jScrollPane2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(275, 275, 275)
+                                .addComponent(selectedFiles))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(322, 322, 322)
-                        .addComponent(jLabel1))
+                        .addGap(307, 307, 307)
+                        .addComponent(jButton3))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(308, 308, 308)
-                        .addComponent(jButton3)))
+                        .addGap(318, 318, 318)
+                        .addComponent(jLabel1)))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -105,16 +110,18 @@ public class FirstPage extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(filePathLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(selectedFiles, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37)
                 .addComponent(jButton2)
-                .addGap(51, 51, 51)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3)
-                .addContainerGap(165, Short.MAX_VALUE))
+                .addGap(27, 27, 27))
         );
 
         pack();
@@ -122,21 +129,38 @@ public class FirstPage extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        final JFileChooser fc = new JFileChooser(); 
-            int returnVal = fc.showOpenDialog(this);
+        final JFileChooser fc = new JFileChooser();
+        fc.setMultiSelectionEnabled(true);
+        int returnVal = fc.showOpenDialog(this);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) 
+        {
+            ImageColorPicker.g_file = fc.getSelectedFiles();
             
-            if (returnVal == JFileChooser.APPROVE_OPTION) 
+            //This is where a real application would open the file.
+            String selectedFilesText = "";
+            
+            for(int i=0;i<ImageColorPicker.g_file.length;i++)
             {
-                ImageColorPicker.g_file = fc.getSelectedFile();
-                //This is where a real application would open the file.
-                System.out.println("File: " + ImageColorPicker.g_file.getName() + ", FilePath = " + ImageColorPicker.g_file.getAbsolutePath());
-                filePathLabel.setText("Selected file path: " + ImageColorPicker.g_file.getAbsolutePath());
-            } 
-            else 
-            {
-                System.out.println("Open command cancelled by user.");
+                if(i==0)
+                {
+                    selectedFilesText+=(ImageColorPicker.g_file[i].getAbsolutePath());
+                }
+                else
+                {
+                    selectedFilesText+= ("\n"+(ImageColorPicker.g_file[i].getAbsolutePath()));
+                }
+                
+                System.out.println(ImageColorPicker.g_file[i].getAbsolutePath());
             }
-            System.out.println(returnVal);
+            
+            areaForFileNames.setText(selectedFilesText);
+        } 
+        else 
+        {
+            System.out.println("Open command cancelled by user.");
+        }
+        System.out.println(returnVal);
             
             
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -146,20 +170,29 @@ public class FirstPage extends javax.swing.JFrame {
         
         try
         {
-            String path = ImageColorPicker.g_file.getAbsolutePath();
-            String extension = "";
-
-            int i = path.lastIndexOf('.');
-            if (i > 0) {
-                extension = path.substring(i+1);
-            }
-            extension = extension.toLowerCase();
+            boolean isSelectedAtLeastOne = false;
+            System.out.println("Here totalFiles = " + ImageColorPicker.g_file.length);
             
-            if(extension.compareTo("jpg")==0 || extension.compareTo("png")==0 || extension.compareTo("bmp")==0 || extension.compareTo("jpeg")==0)
+            for(int i=0; i<ImageColorPicker.g_file.length; i++)
             {
-                new ColorPicky(ImageColorPicker.g_file.getAbsolutePath());
+                String path = ImageColorPicker.g_file[i].getAbsolutePath();
+                String extension = "";
+
+                int k = path.lastIndexOf('.');
+                if (k > 0) {
+                    extension = path.substring(k+1);
+                }
+                extension = extension.toLowerCase();
+
+                if(extension.compareTo("jpg")==0 || extension.compareTo("png")==0 || extension.compareTo("bmp")==0 || extension.compareTo("jpeg")==0)
+                {
+                    isSelectedAtLeastOne = true;
+                    new ColorPicky(path);
+                }
+
             }
-            else
+            
+            if(isSelectedAtLeastOne == false)
             {
                 throw new FileNotFoundException();
             }
@@ -181,12 +214,14 @@ public class FirstPage extends javax.swing.JFrame {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel filePathLabel;
+    private javax.swing.JTextArea areaForFileNames;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     public static javax.swing.JTextArea logOutputArea;
+    private javax.swing.JLabel selectedFiles;
     // End of variables declaration//GEN-END:variables
 }

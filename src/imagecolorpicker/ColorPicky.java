@@ -110,6 +110,7 @@ public class ColorPicky
         private JTextField V;
         
         private String m_FilePath;
+        private String m_FileName;
         
         
 
@@ -122,7 +123,9 @@ public class ColorPicky
             gbc.gridwidth = GridBagConstraints.REMAINDER;
             label = new JLabel();
             try {
-                img = ImageIO.read(new File(filePath));
+                File tempFile = new File(filePath);
+                m_FileName = tempFile.getName();
+                img = ImageIO.read(tempFile);
                 int originalHeight = img.getHeight();
                 int originalwidth = img.getWidth();
                 
@@ -239,9 +242,9 @@ public class ColorPicky
             u = (float) Math.floor(u);
             v = (float) Math.floor(v);
 
-            Y.setText(Float.toString(y));
-            U.setText(Float.toString(u));
-            V.setText(Float.toString(v));
+            Y.setText(String.format("%03.0f", y));
+            U.setText(String.format("%03.0f", u));
+            V.setText(String.format("%03.0f", v));
             
             
             
@@ -252,15 +255,17 @@ public class ColorPicky
             String newText = String.format("%03.0f", y) + " " + String.format("%03.0f", u) +" " + String.format("%03.0f", v);
                     
                     
-            //return "RGB = "+rgbText+" <---> YUV = "+yuvText;
-            return newText;
+            return "RGB = "+rgbText+" <---> YUV = "+yuvText;
+            //return newText;
         }
         
         private void UpdateOutput(String sMsg)
         {
             String timeStamp = new SimpleDateFormat("HH.mm.ss").format(new java.util.Date());
 
-            //sMsg =  timeStamp + ": " + sMsg;
+            sMsg =  timeStamp + ": " + sMsg;
+            
+            sMsg += " --> ("+m_FileName+")";
 
             String sNow = FirstPage.logOutputArea.getText();
 

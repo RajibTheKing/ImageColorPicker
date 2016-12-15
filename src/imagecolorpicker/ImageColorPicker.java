@@ -22,7 +22,7 @@ public class ImageColorPicker extends JFrame
      */
     
     public static JFrame g_mainFrame;
-    public static File g_file;
+    public static File g_file[];
     public static String logOutput;
     public static void main(String[] args) 
     {
