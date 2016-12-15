@@ -40,9 +40,13 @@ import javax.swing.JTextArea;
 public class ColorPicky 
 {
     
+    final String m_ColorPicky_FilePath;
+    
     public ColorPicky(String filaPath) 
     {
         System.out.println(filaPath);
+        m_ColorPicky_FilePath = filaPath;
+        
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -55,7 +59,7 @@ public class ColorPicky
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setLayout(new BorderLayout());
                 
-                frame.add(new TestPane(filaPath));
+                frame.add(new TestPane(m_ColorPicky_FilePath));
                 
                 //frame.add(new OutputLog());
                 
