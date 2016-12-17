@@ -136,8 +136,10 @@ public class ColorPicky {
 
                     Image scaledImage = img.getScaledInstance(newWidth, newHeight, Image.SCALE_DEFAULT);
                     img = toBufferedImage(scaledImage);
-                    //img = ConvertWithThreshold(img);
+
                 }
+                
+                //img = ConvertWithThreshold(img);
 
                 label.setIcon(new ImageIcon(img));
             } catch (IOException ex) {
@@ -204,7 +206,7 @@ public class ColorPicky {
                     String sMsg = UpdateFiledColor(color);
 
                     Point p = e.getLocationOnScreen();
-                    System.out.println("Clicked Pixel:" + p.x + "," + p.y);
+                    System.out.println("Clicked Pixel:" + p.x + "," + p.y + "ImagePixel = (x,y)" + e.getX() + ", " + e.getY());
                     //JOptionPane.showMessageDialog(null, "<html>RGB = " + rgbText + "<br/>YUV = " + yuvText + "<br/></html>");
                     UpdateOutput(sMsg);
 //                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -266,15 +268,18 @@ public class ColorPicky {
             //String newText = String.format("%03.0f", y) + " " + String.format("%03.0f", u) + " " + String.format("%03.0f", v);
              String newText = String.format("%03d", r) + " " + String.format("%03d", g) + " " + String.format("%03d", b) + " " + String.format("%03.0f", y) + " " + String.format("%03.0f", u) + " " + String.format("%03.0f", v);
 
-            return "RGB = "+rgbText+" <---> YUV = "+yuvText;
-            //return newText;
+            //return "RGB = "+rgbText+" <---> YUV = "+yuvText;
+            return newText;
         }
 
         private void UpdateOutput(String sMsg) {
             String timeStamp = new SimpleDateFormat("HH.mm.ss").format(new java.util.Date());
+            System.out.println("Inside Update");
 
-             sMsg =  timeStamp + ": " + sMsg;
-             sMsg += " --> ("+m_FileName+")";
+             //sMsg =  timeStamp + ": " + sMsg;
+             //sMsg += " --> ("+m_FileName+")";
+             ImageColorPicker.g_iCounter++;
+             sMsg = ImageColorPicker.g_iCounter + " " + sMsg;
             String sNow = FirstPage.logOutputArea.getText();
 
             if (sNow == "") {
@@ -316,14 +321,23 @@ public class ColorPicky {
                     u = (float) Math.floor(u);
                     v = (float) Math.floor(v);
 
-                    /*if (u <= 110 && u >= 95 && v >= 135 && v <= 160) {
-                        img.setRGB(j, i, Color.RED.getRGB());
-                    }*/
-                     
-                    if (r>=125 && r>g && g>b) 
+                    
+                    //String yuvText = String.format("%03.0f", y) + ", " + String.format("%03.0f", u) + ", " + String.format("%03.0f", v);
+                    //System.out.println("Here yuv = " + yuvText);
+                    
+                    if ( (u>=95 && u<=125) && (v>=135 && v<=175) ) 
+                    {
+                        //img.setRGB(j, i, Color.RED.getRGB());
+                    }
+                    else
                     {
                         img.setRGB(j, i, Color.RED.getRGB());
                     }
+                     
+                    /*if (r>=125 && r>g && g>b) 
+                    {
+                        img.setRGB(j, i, Color.RED.getRGB());
+                    }*/
                 }
             }
 

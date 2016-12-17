@@ -24,14 +24,20 @@ public class ImageColorPicker extends JFrame
     public static JFrame g_mainFrame;
     public static File g_file[];
     public static String logOutput;
+    public static int g_iCounter;
+    
     public static void main(String[] args) 
     {
         // TODO code application logic here
+        g_iCounter = 0;
+        
         System.out.println("Hello world");
         logOutput = "";
         
         //ColorPicky m_colorPicky = new ColorPicky("hell");
+        
         g_mainFrame = new FirstPage();
+        
         g_mainFrame.setVisible(true);
         
     }

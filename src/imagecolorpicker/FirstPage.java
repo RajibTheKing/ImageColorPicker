@@ -65,6 +65,7 @@ public class FirstPage extends javax.swing.JFrame {
 
         logOutputArea.setColumns(20);
         logOutputArea.setRows(5);
+        logOutputArea.setText("Values R G B Y U V");
         jScrollPane1.setViewportView(logOutputArea);
 
         jLabel1.setText("Log Output ");
@@ -206,7 +207,7 @@ public class FirstPage extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        logOutputArea.setText("");
+        logOutputArea.setText("Values R G B Y U V");
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
