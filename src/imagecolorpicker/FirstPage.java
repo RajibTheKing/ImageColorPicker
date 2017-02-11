@@ -201,7 +201,7 @@ public class FirstPage extends javax.swing.JFrame {
         catch(Exception e)
         {
             System.out.println(e.getCause());
-            JOptionPane.showMessageDialog(null, "..Asholee duitaa Karone Eita hotee pareee\n1. Hoy.. apni Thik moto file ta select koren nai\n2. Na hoy, Apni vul Image file select korechen\n\nPlease Select a valid Image file");
+            JOptionPane.showMessageDialog(null, "..আসলে দুইটা কারণে এই জিনিসটা হতে পারে \n1. হয়.. আপনি ঠিক মত ফাইল টা সিলেক্ট করেন নাই \n2. না হয় , আপনি ভুল  Image ফাইল সিলেক্ট করেছেন \n\nPlease Select a valid Image file");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 

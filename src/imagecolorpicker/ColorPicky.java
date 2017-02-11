@@ -139,7 +139,7 @@ public class ColorPicky {
 
                 }
                 
-                //img = ConvertWithThreshold(img);
+                img = ConvertWithThreshold(img);
 
                 label.setIcon(new ImageIcon(img));
             } catch (IOException ex) {
@@ -206,7 +206,7 @@ public class ColorPicky {
                     String sMsg = UpdateFiledColor(color);
 
                     Point p = e.getLocationOnScreen();
-                    System.out.println("Clicked Pixel:" + p.x + "," + p.y + "ImagePixel = (x,y)" + e.getX() + ", " + e.getY());
+                    System.out.println("Clicked Pixel:" + p.x + "," + p.y + "ImagePixel = (x,y)" + e.getX() + ", " + e.getY() + ", ImageName = " + m_FileName);
                     //JOptionPane.showMessageDialog(null, "<html>RGB = " + rgbText + "<br/>YUV = " + yuvText + "<br/></html>");
                     UpdateOutput(sMsg);
 //                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -274,7 +274,6 @@ public class ColorPicky {
 
         private void UpdateOutput(String sMsg) {
             String timeStamp = new SimpleDateFormat("HH.mm.ss").format(new java.util.Date());
-            System.out.println("Inside Update");
 
              //sMsg =  timeStamp + ": " + sMsg;
              //sMsg += " --> ("+m_FileName+")";
@@ -290,7 +289,19 @@ public class ColorPicky {
 
             FirstPage.logOutputArea.setText(sNow);
         }
-
+        
+        int getMax(int a, int b, int c)
+        {
+            return Math.max(a, Math.max(b, c));
+        }
+        int getMin(int a, int b, int c)
+        {
+            return Math.min(a, Math.min(b, c));
+        }
+        private boolean isSkinFromRGB(int R, int G, int B)
+        {
+            return R > 95 && G > 40 && B > 20 && (getMax(R,G,B)-getMin(R,G,B)) > 15 &&  R-G > 15 && R > G && R > B;
+        }
         private BufferedImage ConvertWithThreshold(BufferedImage img) {
 
             System.out.println(img.getHeight() + ", " + img.getWidth());
@@ -300,8 +311,10 @@ public class ColorPicky {
             int iHeight = img.getHeight();
             int iWidth = img.getWidth();
 
-            for (int i = 0; i < iHeight; i++) {
-                for (int j = 0; j < iWidth; j++) {
+            for (int i = 0; i < iHeight; i++) 
+            {
+                for (int j = 0; j < iWidth; j++) 
+                {
 
                     int packedInt = img.getRGB(j, i);
                     Color color = new Color(packedInt, true);
@@ -333,11 +346,12 @@ public class ColorPicky {
                     {
                         img.setRGB(j, i, Color.RED.getRGB());
                     }
-                     
-                    /*if (r>=125 && r>g && g>b) 
+                    
+                    /*if(!isSkinFromRGB(r, g, b))
                     {
                         img.setRGB(j, i, Color.RED.getRGB());
                     }*/
+                    
                 }
             }
 
